@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingapp/UIFIRSTSCREEN.dart';
+
+import 'package:shoppingapp/widgets/UIFIRSTSCREEN.dart';
 
 void main() {
   runApp(const MyApp());
