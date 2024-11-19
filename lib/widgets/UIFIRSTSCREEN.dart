@@ -52,7 +52,7 @@ class Uifirstscreen extends StatefulWidget{
             leading: Container(
               
               width: 20,
-              height: 23,
+              height: 20,
               color: groceryItemss[index].category.color,
               
             ),
