@@ -34,7 +34,7 @@ class Uifirstscreen extends StatefulWidget{
     Widget content = const Center(
       child: Text(" NO DATA YET ! ", 
       style: TextStyle(
-        fontSize: 20, color: Color.fromARGB(255, 202, 202, 224)
+        fontSize: 22, color: Color.fromARGB(255, 202, 202, 224)
         ),
         )
         );
@@ -42,22 +42,27 @@ class Uifirstscreen extends StatefulWidget{
     if(groceryItemss.isNotEmpty){
       content = ListView.builder(
             itemCount: groceryItemss.length,
-           itemBuilder: (context, index) => ListTile(
-            
-            title: Text(groceryItemss[index].name),
-            
-            subtitle: Text(groceryItemss[index].quantity.toString()),
-            
-            
-            leading: Container(
+           itemBuilder: (context, index) => Dismissible(
+            key: Key(groceryItemss[index].id.toString()),
+            onDismissed: groceryItemss.remove,
+            direction : DismissDirection.endToStart,
+             child: ListTile(
               
-              width: 29,
-              height: 20,
-              color: groceryItemss[index].category.color,
+              title: Text(groceryItemss[index].name),
               
-            ),
-          
-
+              subtitle: Text(groceryItemss[index].quantity.toString()),
+              
+              
+              leading: Container(
+                
+                width: 29,
+                height: 20,
+                color: groceryItemss[index].category.color,
+                
+              ),
+                       
+             
+             ),
            ),
            
             
