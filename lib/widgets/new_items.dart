@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shoppingapp/data/categories.dart';
 import 'package:shoppingapp/data/dummies.dart';
 import 'package:shoppingapp/models/categorymodel.dart';
 import 'package:shoppingapp/models/grocery_model.dart';
+import 'package:http/http.dart' as http;
 
 class NewItemsscreen extends StatefulWidget {
   const NewItemsscreen({super.key});
@@ -14,9 +17,6 @@ class NewItemsscreen extends StatefulWidget {
 }
 
 
-
-
-
 class _NewItemsscreenState extends State<NewItemsscreen> {
   final formKey = GlobalKey<FormState>();
   var entername = "";
@@ -26,10 +26,25 @@ class _NewItemsscreenState extends State<NewItemsscreen> {
   void saveItem() {
   if (formKey.currentState!.validate()) {
     formKey.currentState!.save();
-  Navigator.of(context).pop(GroceryItem(category: selectedcategory!,
-   id: DateTime.now().toString(),
-    name: entername,
-     quantity: enteredquantitiy));
+
+
+    final url = Uri.https('shopping-backend-8ec1f-default-rtdb.asia-southeast1.firebasedatabase.app', 
+    'shoppig-Items.json');
+    http.post(url , headers: {'content-type' : 'application.json'} , body :json.encode({
+      'name': entername,
+    'category': selectedcategory!.title,
+     'quantity': enteredquantitiy,
+
+    }));
+
+
+  //Navigator.of(context).pop(GroceryItem(
+   //id: DateTime.now().toString(),
+    //name: entername,
+    //category: selectedcategory!,
+     //quantity: enteredquantitiy,
+     
+     //));
   }
 }
 
