@@ -28,9 +28,8 @@ class _NewItemsscreenState extends State<NewItemsscreen> {
     formKey.currentState!.save();
 
 
-    final url = Uri.https('shopping-backend-8ec1f-default-rtdb.asia-southeast1.firebasedatabase.app', 
-    'shoppig-Items.json');
-    http.post(url , headers: {'content-type' : 'application.json'} , body :json.encode({
+    final url = Uri.https('shopit-efce2-default-rtdb.europe-west1.firebasedatabase.app','shoppig-Items.json');
+    http.post(url , headers: {'Content-Type' : 'application/json'} , body :json.encode({
       'name': entername,
     'category': selectedcategory!.title,
      'quantity': enteredquantitiy,
@@ -137,6 +136,7 @@ class _NewItemsscreenState extends State<NewItemsscreen> {
                   TextButton(
                     onPressed: () {
                       formKey.currentState!.reset();
+                    
                       
                     },
                     child: const Text("reset"),
