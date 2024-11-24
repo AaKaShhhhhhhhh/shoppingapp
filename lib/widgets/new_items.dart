@@ -23,19 +23,25 @@ class _NewItemsscreenState extends State<NewItemsscreen> {
   var enteredquantitiy =1;
   var selectedcategory= categories[Categorymodel.vegetables];
 
-  void saveItem() {
+  void saveItem() async{
   if (formKey.currentState!.validate()) {
     formKey.currentState!.save();
 
 
     final url = Uri.https('shopit-efce2-default-rtdb.europe-west1.firebasedatabase.app','shoppig-Items.json');
-    http.post(url , headers: {'Content-Type' : 'application/json'} , body :json.encode({
+    final response = await http.post(url , headers: {'Content-Type' : 'application/json'} , body :json.encode({
       'name': entername,
     'category': selectedcategory!.title,
      'quantity': enteredquantitiy,
 
     }));
-
+    print(response.body);
+    print(response.statusCode);
+    if(!context.mounted){
+      return;
+    }
+    
+    Navigator.pop(context);
 
   //Navigator.of(context).pop(GroceryItem(
    //id: DateTime.now().toString(),

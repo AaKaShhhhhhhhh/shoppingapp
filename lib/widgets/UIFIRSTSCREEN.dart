@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shoppingapp/data/categories.dart';
 import 'package:shoppingapp/data/dummies.dart';
+import 'package:shoppingapp/models/categorymodel.dart';
 import 'package:shoppingapp/models/grocery_model.dart';
 import 'package:shoppingapp/widgets/new_items.dart';
+import 'package:http/http.dart' as http;
 
 class Uifirstscreen extends StatefulWidget{
   Uifirstscreen({super.key});
@@ -11,19 +16,44 @@ class Uifirstscreen extends StatefulWidget{
   State<Uifirstscreen> createState() => _UifirstscreenState();}
 
   class _UifirstscreenState extends State<Uifirstscreen> {
-  final List<GroceryItem> groceryItemss = [];
+  List<GroceryItem> groceryItemss = [];
 
+    @override
+  void initState(){
+    super.initState();
+    loadItem();
+  }
+
+  void loadItem() async{
+    final url = Uri.https('shopit-efce2-default-rtdb.europe-west1.firebasedatabase.app','shoppig-Items.json');
+    final response = await http.get(url);
+    final Map<String,dynamic> listData = json.decode(response.body);
+    final List<GroceryItem> loadedData = [];
+    
+    for(final items in listData.entries){
+      final categoryy  = categories.entries.firstWhere((catItem)=> catItem.value.title == items.value['category']).value;
+      loadedData.add(GroceryItem(
+        id: items.key,
+        name: items.value['name'],
+        quantity: items.value['quantity'],
+        category: categoryy,
+
+      ));
+      
+    }
+    setState(() {
+      groceryItemss = loadedData;
+    });
+  }
 
   void addnewitem(context) async {
    final newItem = await Navigator.of(context).push<GroceryItem>(
       MaterialPageRoute(builder: (context)=> NewItemsscreen() )
     );
-    if (newItem==null){
-    return;
-  }
-  
-        setState((){groceryItemss.add(newItem);});  
+    
+     
 
+     loadItem();
   }
   
   
