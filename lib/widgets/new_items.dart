@@ -87,7 +87,7 @@ class _NewItemsscreenState extends State<NewItemsscreen> {
                         label: Text('quantity'),
                       ),
                       keyboardType: TextInputType.number,
-                      initialValue: '1',
+                      initialValue: '0',
                       validator: (value) {
                         if (value == null || value.isEmpty || int.tryParse(value) == null || int.tryParse(value)! <= 0) {
                           return 'Enter a valid Positive value';
