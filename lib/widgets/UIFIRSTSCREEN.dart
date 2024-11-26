@@ -51,9 +51,12 @@ class Uifirstscreen extends StatefulWidget{
       MaterialPageRoute(builder: (context)=> NewItemsscreen() )
     );
     
-     
-
-     loadItem();
+    if(newItem==null){
+      return;
+    }
+    setState(() {
+      groceryItemss.add(newItem);
+    });
   }
   
   

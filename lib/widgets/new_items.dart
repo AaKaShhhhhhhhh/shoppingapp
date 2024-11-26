@@ -34,22 +34,24 @@ class _NewItemsscreenState extends State<NewItemsscreen> {
     'category': selectedcategory!.title,
      'quantity': enteredquantitiy,
 
-    }));
-    print(response.body);
-    print(response.statusCode);
+    }
+    )
+    );
+
+    final Map<String,dynamic>  responseData = json.decode(response.body);
     if(!context.mounted){
       return;
     }
     
-    Navigator.pop(context);
+    
 
-  //Navigator.of(context).pop(GroceryItem(
-   //id: DateTime.now().toString(),
-    //name: entername,
-    //category: selectedcategory!,
-     //quantity: enteredquantitiy,
+  Navigator.of(context).pop(GroceryItem(
+   id: responseData['name'],
+    name: entername,
+    category: selectedcategory!,
+     quantity: enteredquantitiy,
      
-     //));
+     ));
   }
 }
 
