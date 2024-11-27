@@ -59,7 +59,7 @@ class _NewItemsscreenState extends State<NewItemsscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Items'),
+        title: const Text('New Items'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

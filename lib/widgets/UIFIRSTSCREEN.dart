@@ -9,7 +9,7 @@ import 'package:shoppingapp/widgets/new_items.dart';
 import 'package:http/http.dart' as http;
 
 class Uifirstscreen extends StatefulWidget{
-  Uifirstscreen({super.key});
+  const Uifirstscreen({super.key});
 
 
   @override
@@ -17,6 +17,11 @@ class Uifirstscreen extends StatefulWidget{
 
   class _UifirstscreenState extends State<Uifirstscreen> {
   List<GroceryItem> groceryItemss = [];
+
+    var loading = true;
+
+
+
 
     @override
   void initState(){
@@ -43,12 +48,13 @@ class Uifirstscreen extends StatefulWidget{
     }
     setState(() {
       groceryItemss = loadedData;
+      loading = false;
     });
   }
 
   void addnewitem(context) async {
    final newItem = await Navigator.of(context).push<GroceryItem>(
-      MaterialPageRoute(builder: (context)=> NewItemsscreen() )
+      MaterialPageRoute(builder: (context)=> const NewItemsscreen() )
     );
     
     if(newItem==null){
@@ -58,12 +64,24 @@ class Uifirstscreen extends StatefulWidget{
       groceryItemss.add(newItem);
     });
   }
-  
+  void _removeitem(GroceryItem items){
+
+    final url = Uri.https('shopit-efce2-default-rtdb.europe-west1.firebasedatabase.app', 
+    'shoppig-Items/${items.id}.json');
+     http.delete(url);
+
+    setState(() {
+      groceryItemss.remove(items);
+    });
+  }
   
 
   @override
   Widget build(BuildContext context) {
     
+    if(loading){
+      return Center(child: CircularProgressIndicator(),);
+    }
     Widget content = const Center(
       child: Text(" NO DATA YET ! ", 
       style: TextStyle(
@@ -77,7 +95,9 @@ class Uifirstscreen extends StatefulWidget{
             itemCount: groceryItemss.length,
            itemBuilder: (context, index) => Dismissible(
             key: Key(groceryItemss[index].id.toString()),
-            onDismissed: groceryItemss.remove,
+            onDismissed: (ctx){
+              _removeitem(groceryItemss[index]);
+            },
             direction : DismissDirection.endToStart,
              child: ListTile(
               
@@ -103,9 +123,9 @@ class Uifirstscreen extends StatefulWidget{
     }
   
     return Scaffold(
-      appBar: AppBar(title: Text("Groceries"),
+      appBar: AppBar(title: const Text("Groceries"),
       actions: [
-        IconButton(icon: Icon(Icons.add),
+        IconButton(icon: const Icon(Icons.add),
          onPressed: (){
           addnewitem(context);
          }),
