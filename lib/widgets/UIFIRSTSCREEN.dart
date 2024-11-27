@@ -85,7 +85,7 @@ class Uifirstscreen extends StatefulWidget{
     Widget content = const Center(
       child: Text(" NO DATA YET ! ", 
       style: TextStyle(
-        fontSize: 22, color: Color.fromARGB(255, 202, 202, 224)
+        fontSize: 20, color: Color.fromARGB(255, 202, 202, 224)
         ),
         )
         );
